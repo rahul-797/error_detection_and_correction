@@ -1,20 +1,21 @@
-#include <cctype>
 #include <iostream>
 #include <string>
 using namespace std;
 
-bool generateCode(int *arr) {
+bool generateCode(string& isbn) {
   int sum = 0, sum2 = 0;
   for (int i = 0; i < 9; i++) {
-    sum += arr[i];
-    sum2 += (i + 1) * arr[i];
+    sum += (isbn[i] - '0');
+    sum2 += (i + 1) * (isbn[i] - '0');
   }
-  sum %= 9, sum2 %= 9;
+  sum %= 11, sum2 %= 11;
 
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 10; j++) {
-      if (((sum + i + j) % 9 == 0) && ((sum2 + (10 * i) + (11 * j)) % 9 == 0)) {
-        arr[9] = i, arr[10] = j;
+  for (int i = 0; i < 11; i++) {
+    for (int j = 0; j < 11; j++) {
+      if (((sum + i + j) % 11 == 0) &&
+          ((sum2 + (10 * i) + (11 * j)) % 11 == 0)) {
+        (i == 10) ? isbn.append("X") : isbn.append(to_string(i));
+        (j == 10) ? isbn.append("X") : isbn.append(to_string(j));
         return 1;
       }
     }
@@ -33,20 +34,16 @@ int main() {
   }
   isbn.pop_back();
 
-  int arr[11];
   for (int i = 0; i < 9; i++) {
-    if (isdigit(isbn[i])) {
-      arr[i] = isbn[i] - '0';
+    if (!isdigit(isbn[i])) {
+      cout << endl << "Enter valid ISBN-10" << endl;
+      return 1;
     }
   }
 
-  generateCode(arr);
+  generateCode(isbn);
 
-  cout << "ISBN with error correction enabled is: ";
-  for (int i : arr) {
-    cout << i;
-  }
-  cout << endl;
+  cout << "ISBN with error correction enabled is: " << isbn << endl;
 
   return 0;
 }
