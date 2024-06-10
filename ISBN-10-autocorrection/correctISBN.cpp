@@ -1,30 +1,42 @@
-#include <cctype>
 #include <iostream>
 #include <string>
 using namespace std;
 
+void removeCodes(int *arr) {
+  int sum = 0;
+  for (int i = 0; i < 9; i++) {
+    sum += (i + 1) * arr[i];
+  }
+  sum %= 11;
+  cout << sum << endl;
+  arr[9] = sum, arr[10] = -1;
+}
+
 bool checkISBN(int *arr) {
-  int sum = 0, sum2 = 0, pos = 0;
+  int sum = 0, sum2 = 0, index = 0;
   for (int i = 0; i < 11; i++) {
     sum += arr[i];
-    sum2 += ((i + 1) * arr[i]) % 9;
+    sum2 += ((i + 1) * arr[i]) % 11;
   }
-  sum %= 9, sum2 %= 9;
+  sum %= 11, sum2 %= 11;
   if (sum == 0 && sum2 == 0) {
     cout << "ISBN is already correct" << endl;
+    removeCodes(arr);
+    cout << "The correct ISBN-10 is: ";
+    for (int i = 0; i < 10; i++) {
+      cout << arr[i];
+    }
+    cout << endl;
     return false;
   }
   for (int i = 1; i <= 11; i++) {
-    if ((sum2 - (sum * i)) % 9 == 0) {
-      pos = i;
-      cout << "Error is of: " << sum << endl;
+    if ((sum2 - (sum * i)) % 11 == 0) {
+      index = i - 1;
       break;
     }
   }
-  arr[pos] -= sum;
-  while (arr[pos] < 0) {
-    arr[pos] += 9;
-  }
+  arr[index] = arr[index] - sum;
+  arr[index] %= 11;
   return true;
 }
 
@@ -50,8 +62,10 @@ int main() {
 
   bool changed = checkISBN(arr);
   if (changed) {
+    removeCodes(arr);
     cout << "The correct ISBN-10 is: ";
     for (int i : arr) {
+      if (i == -1) break;
       cout << i;
     }
     cout << endl;
