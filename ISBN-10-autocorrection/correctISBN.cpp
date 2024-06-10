@@ -8,7 +8,6 @@ void removeCodes(int *arr) {
     sum += (i + 1) * arr[i];
   }
   sum %= 11;
-  cout << sum << endl;
   arr[9] = sum, arr[10] = -1;
 }
 
