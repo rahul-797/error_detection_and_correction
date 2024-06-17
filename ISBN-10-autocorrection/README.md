@@ -2,6 +2,8 @@
 # ISBN Validator and Auto-Correction Tools
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Size](https://img.shields.io/github/repo-size/rahul-797/error_detection_and_correction)
+![GitHub Repo stars](https://img.shields.io/github/stars/rahul-797/error_detection_and_correction?style=flat)
 
 ## Table of Contents
 
