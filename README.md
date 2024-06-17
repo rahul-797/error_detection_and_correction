@@ -13,5 +13,3 @@
 - **Hamming Code Generation (15,11)**: Generates 16-bit code with 5 parity bits and 11 message bits.
 - **Code Correction**: Detect and correct single bit errors and detect(but not correct) 2-bit errors.
 
-```
-
